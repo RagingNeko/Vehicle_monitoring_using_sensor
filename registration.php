@@ -18,19 +18,7 @@
     />
 </head>
 
-<header>    
-    <div class="logo-header">
-    <img src="images/logo.png" alt="Logo" class="logo">
-    <h1>  Northwestern Mindanao State College </h1>
-</div>
-
-        <input type="checkbox" id="menu-toggle">
-        <label for="menu-toggle" class="menu-icon">&#9776;</label>
-
-        <nav>
-        <a href="admin.php" class="tbtn">Back</a>
-    </nav>
-</header>
+<?php include ('header.php') ?>
 
 
 <body>
@@ -107,8 +95,9 @@
 				   </div>
 
 		  
-		  <button type="submit" class="btn btn-primary">Sign Up</button>
-		  <a href="login.php" class="link-secondary">Login</a>
+		  <button type="submit" class="btn btn-success">Sign Up</button>
+		  <a href="home.php" class="btn btn-primary">Back</a>
+	<!--	  <a href="login.php" class="link-secondary">Login</a> -->
 		  </form>
     </div>
     </div>

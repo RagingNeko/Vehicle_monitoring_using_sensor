@@ -23,11 +23,6 @@
         </script>
 		</head>
 
-		<style>
-			body{
-				background-image: url('images/about.jpg');
-			}
-		</style>
 
 <body>
 <?php include 'header.php' ?>

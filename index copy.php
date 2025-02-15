@@ -21,22 +21,6 @@
     body{
       background image: url('image/parking.png');
     }
-    #back-to-top {
-            display: none;
-            position: fixed;
-            bottom: 500px;
-            right: 100px;
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 18px;
-        }
-        #back-to-top:hover {
-            background: #0056b3;
-        }
 </style>
 <script type="text/javascript">
         function preventBack() {
@@ -64,21 +48,7 @@
 </header>
 
 <body>
-<button id="back-to-top" title="Go to top">↑</button>
-    <script>
-        window.onscroll = function() {
-            const button = document.getElementById('back-to-top');
-            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-                button.style.display = "block";
-            } else {
-                button.style.display = "none";
-            }
-        };
 
-        document.getElementById('back-to-top').onclick = function() {
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        };
-    </script>
 
     <div class="contain">
         <section class="hero">
@@ -112,7 +82,8 @@
             <p>Our mission is to leverage cutting-edge technology to improve urban mobility and provide our customers with a seamless parking experience.</p>
             <p>Founded in [2022], our team consists of passionate individuals committed to transforming the parking industry. Join us in our journey towards smarter cities!</p>
         </div>
-
+      
+    <button id="back-to-top" title="Go to top">↑</button>
    
         <div class="image-content">
             <img src="images/us.png" alt="Parking Area" class="about-image">
@@ -128,8 +99,7 @@
     
       <div class="row">
         <h1>Our Team</h1>
-     
-
+      </div>
       <div class="row">
         <!-- Column 1-->
         <div class="column">
@@ -227,16 +197,32 @@
             </div>
           </div>
         </div>
-        </div>
-        
-        </section>
-        </div>
+      </div>
       </div>
       </body>
 <?php include "footer.php"?>
 </html>
+      
+    </section>
     
      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-OA6hbn2gqtkAu2BUK/7cC03/Z4uAzgU1l2cT+EVX9inCeY6/USLMwtEyTcQBE0km" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-yyg+/f1t2J9wxd8BQLok5esNKZ0FDkmZ9wAM0F0g4bNp6PzZHzTdt2D+4hPuGb3k" crossorigin="anonymous"></script>
     <script src="script.js"></script>
+
+    <script>
+        // Show the button when the user scrolls down
+        window.onscroll = function() {
+            const button = document.getElementById('back-to-top');
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                button.style.display = "block";
+            } else {
+                button.style.display = "none";
+            }
+        };
+
+        // Scroll to the top when the button is clicked
+        document.getElementById('back-to-top').onclick = function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        };
+    </script>
 

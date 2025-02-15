@@ -40,12 +40,12 @@
 				</a>
 			</li>
 		
-			<li>
+		<!--	<li>
 				<a href="contact.php">
 					<i class='bx bxs-message-dots' ></i>
 					<span class="text">Message</span>
 				</a>
-			</li>
+			</li>-->
 	
 		</ul>
 		<ul class="side-menu">

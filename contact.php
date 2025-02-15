@@ -18,7 +18,7 @@
   </head>
 
 <?php include 'header.php' ?>
-
+ 
   <body>
   <div class="contain">
     <section class="team" id="team-section">

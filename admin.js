@@ -1,5 +1,18 @@
   // admin panel script
 
+  document.addEventListener("DOMContentLoaded", function () {
+    let menuIcon = document.getElementById("toggle-menu");
+    let sidebar = document.getElementById("sidebar");
+
+    if (menuIcon && sidebar) {
+        menuIcon.addEventListener("click", function () {
+            sidebar.classList.toggle("active");
+        });
+    } else {
+        console.error("Sidebar or menu icon not found.");
+    }
+});
+
 
   const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
 

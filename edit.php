@@ -28,17 +28,7 @@ $user = getUserById($_SESSION['id'], $conn);
     />
 </head>
 
-<header>
-
-<img src="images/logo.png" alt="Startup Company Logo">
-        <h1> <a href="index.php">Northwestern Mindanao State College</h1></a>
-        <input type="checkbox" id="menu-toggle">
-        <label for="menu-toggle" class="menu-icon">&#9776;</label>
-<nav>
-        <a href="home.php" class="tbtn">Back</a>
-    </nav>
-</header>
-
+<?php include ('header.php') ?>
 
 <body>
     <?php if ($user) { ?>

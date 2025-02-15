@@ -1,3 +1,13 @@
+<?php 
+session_start();
+
+if (isset($_SESSION['id']) && isset($_SESSION['fname'])) {
+
+include "db_conn.php";
+include 'php/User.php';
+$user = getUserById($_SESSION['id'], $conn);
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +33,7 @@
         </head>
 
   <body>
+  <?php if ($user) { ?>
     <?php include('db_conn.php'); ?>
 
 
@@ -52,19 +63,19 @@
             </a>
         </li>
 
-      <!--  <li>
-            <a href="#">
-                <i class='bx bxs-group'></i>
-                <span class="text">Users</span>
-            </a>
-        </li>-->
-
         <li>
+            <a href="sensor_registration.php">
+                <i class='bx bxs-registered'></i>
+                <span class="text">Register Sensor</span>
+            </a>
+        </li>
+
+      <!--  <li>
             <a href="contact.php">
                 <i class='bx bxs-message-dots'></i>
                 <span class="text">Message</span>
             </a>
-        </li>
+        </li> -->
     </ul>
 
     <ul class="side-menu">
@@ -159,9 +170,9 @@ if ($stmt) {
             <td><?php echo $row['description']; ?></td>
             <td><?php echo $row['barangay']; ?></td>
             <td><?php echo $row['city']; ?></td>
-            <td><a href="update_parking_status.php?id=<?php echo $row['parking_id']; ?>" class="btn btn-primary">View</a></td>
-            <td><a href="admin_update.php?id=<?php echo $row['parking_id']; ?>" class="btn btn-success">Update</a></td>
-            <td><a href="delete_parking.php?id=<?php echo $row['parking_id']; ?>" class="btn btn-danger">Delete</a></td>
+            <td><a href="update_parking_status.php?id=<?php echo $row['parking_id']; ?>" class="btn btn-primary"><i class="fas fa-eye"></i> View</a></td>
+            <td><a href="admin_update.php?id=<?php echo $row['parking_id']; ?>" class="btn btn-success"><i class="fas fa-edit"></i> Update</a></td>
+            <td><a href="delete_parking.php?id=<?php echo $row['parking_id']; ?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a></td>
         </tr>
         <?php
     }
@@ -256,9 +267,20 @@ if ($stmt) {
     </form>
 
     </div>
-    
+
+
     <script src="admin.js"></script>
   
+    <?php }else { 
+     header("Location: login.php");
+     exit;
+    } ?>
+
+
+<?php }else {
+	header("Location: login.php");
+	exit;
+} ?>
 
     </body>
     <?php include('footer.php'); ?>

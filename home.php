@@ -6,9 +6,8 @@ if (isset($_SESSION['id']) && isset($_SESSION['fname'])) {
 include "db_conn.php";
 include 'php/User.php';
 $user = getUserById($_SESSION['id'], $conn);
-
-
  ?>
+
 <!DOCTYPE html>
 <head>
 	<meta charset="utf-8">
@@ -28,27 +27,14 @@ $user = getUserById($_SESSION['id'], $conn);
     />
 </head>
 
-<header>    
-    <div class="logo-header">
-    <img src="images/logo.png" alt="Logo" class="logo">
-    <h1>  Northwestern Mindanao State College </h1>
-</div>
-
-        <input type="checkbox" id="menu-toggle">
-        <label for="menu-toggle" class="menu-icon">&#9776;</label>
-
-        <nav>
-        <a href="registration.php" class="tbtn">Register</a>
-        <a href="admin.php" class="tbtn">Back</a>
-    </nav>
-</header>
-
-
+<?php include ('header.php') ?>
 <body>
     <?php if ($user) { ?>
 
 		<div class="profile-container">
- 
+        <div class="home-button">
+        <a href="admin.php" class="btn btn-primary">Back</a>
+    </div>
  <div class="profile-header">
     		<img src="upload/<?=$user['pp']?>"
     		     class="profile-picture">
@@ -66,9 +52,10 @@ $user = getUserById($_SESSION['id'], $conn);
             <a href="edit.php" class="btn btn-primary">
             	Edit Profile
             </a>
+            <a href="registration.php" class="btn btn-success">Register</a>
 			</div>
 
-			   <!-- Social media section with icons -->
+			   <!-- Social media section with icons 
 			   <div class="profile-socials">
             <h3>Connect with me</h3>
             <a href="https://www.youtube.com/watch?v=ZHgyQGoeaB0">
@@ -82,7 +69,9 @@ $user = getUserById($_SESSION['id'], $conn);
             </a>
         </div>
         </div>
-        </div>
+         -->
+        </div> 
+       
 
         <?php include 'footer.php' ?>
   
