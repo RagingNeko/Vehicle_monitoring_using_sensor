@@ -1,0 +1,120 @@
+#include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
+
+// Wi-Fi credentials
+const char* ssid = "Redmi 12";        // Your network SSID (name)
+const char* password = "Mark12345";   // Your network password
+
+// Sensor pins
+const int trigPin1 = D1;
+const int echoPin1 = D2;
+const int trigPin2 = D3;
+const int echoPin2 = D4;
+
+// Sensor data
+long duration1, duration2;
+int distance1, distance2;
+const int OBJECT_DETECTED_THRESHOLD = 10; // Threshold distance in cm to detect an object
+
+// Web server
+ESP8266WebServer server(80); // Create a web server on port 80
+
+// Static IP configuration
+IPAddress localIP(192, 168, 48, 100); // Static IP for NodeMCU
+IPAddress gateway(192, 168, 48, 1);  // Gateway IP
+IPAddress subnet(255, 255, 255, 0);  // Subnet mask
+
+// Sensor status variables
+String sensor1Status = "Available";
+String sensor2Status = "Available";
+
+void setup() {
+  // Initialize sensor pins
+  pinMode(trigPin1, OUTPUT);
+  pinMode(echoPin1, INPUT);
+  pinMode(trigPin2, OUTPUT);
+  pinMode(echoPin2, INPUT);
+
+  Serial.begin(9600); // Start serial communication
+
+  // Connect to Wi-Fi with static IP
+  WiFi.config(localIP, gateway, gateway, subnet);
+  WiFi.begin(ssid, password);
+  Serial.println("Connecting to WiFi...");
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("\nConnected to WiFi");
+  Serial.print("NodeMCU IP Address: ");
+  Serial.println(WiFi.localIP());
+
+  // Define API endpoints
+  server.on("/", handleRoot); // Root endpoint
+  server.on("/data", handleData); // Endpoint to fetch sensor data
+
+  // Start the server
+  server.begin();
+  Serial.println("HTTP server started");
+}
+
+void loop() {
+  server.handleClient(); // Handle incoming client requests
+
+  // Read distance from sensor 1
+  distance1 = getDistance(trigPin1, echoPin1);
+  sensor1Status = (distance1 < OBJECT_DETECTED_THRESHOLD) ? "Taken" : "Available";
+
+  // Read distance from sensor 2
+  distance2 = getDistance(trigPin2, echoPin2);
+  sensor2Status = (distance2 < OBJECT_DETECTED_THRESHOLD) ? "Taken" : "Available";
+
+  delay(500); // Delay between readings
+}
+
+// Function to get the distance from the ultrasonic sensor
+int getDistance(int trigPin, int echoPin) {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  long duration = pulseIn(echoPin, HIGH);
+  return duration * 0.034 / 2; // Convert to cm
+}
+
+// Handler for the root endpoint
+void handleRoot() {
+  Serial.println("Root endpoint accessed");
+  String html = "<html><body>";
+  html += "<h1>NodeMCU Sensor Data</h1>";
+  html += "<p>Sensor 1 Status: " + sensor1Status + "</p>";
+  html += "<p>Sensor 2 Status: " + sensor2Status + "</p>";
+  html += "</body></html>";
+  server.send(200, "text/html", html);
+}
+
+// Handler for the /data endpoint
+void handleData() {
+  Serial.println("Data endpoint accessed");
+
+  // Get the sensor ID from the query parameter
+  String sensorId = server.arg("sensor");
+
+  // Prepare the JSON response
+  String jsonResponse;
+  if (sensorId == "1") {
+    jsonResponse = "{\"status\":\"" + sensor1Status + "\"}";
+  } else if (sensorId == "2") {
+    jsonResponse = "{\"status\":\"" + sensor2Status + "\"}";
+  } else {
+    jsonResponse = "{\"error\":\"Invalid sensor ID\"}";
+  }
+
+  // Send the JSON response
+  server.sendHeader("Access-Control-Allow-Origin", "*"); // Allow all origins
+  server.send(200, "application/json", jsonResponse);
+  Serial.println("Response sent: " + jsonResponse);
+}
